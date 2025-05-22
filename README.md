@@ -1,1 +1,1 @@
-# This Is 7 Days Challenge for Devops Shll Scripting.
+# This Is 7 Days Challenge for Devops Shell Scripting.
