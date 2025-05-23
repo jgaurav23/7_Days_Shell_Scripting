@@ -91,7 +91,7 @@ while true;
 				read -p "Enter a new username : " new_username
 				sudo usermod -l "$new_username" "$username"
 				echo "Username updated to '$new_username'"
-				username="$new_username"
+				username="$new_username" #update for next loop
 				;;
 			2) 
 				read -p "Enter a new directory path: " new_home
