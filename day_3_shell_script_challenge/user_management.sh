@@ -64,6 +64,61 @@ function delete_user {
 }
 
 
+function update_user {
+
+read -p "Enter a username: " username
+
+if ! id "$username" &>/dev/null; 
+then
+	echo "Error: user '$username' does not exists."
+	return 1
+fi
+
+echo "user $username found."
+
+while true;
+	do 
+		echo ""
+		echo "select the action you want to perform:"
+		echo "1. change username"
+		echo "2. change home directory"
+		echo "3. change login shell"
+		echo "4. Exit"
+		read -p "Enter choice [1-4]: " choice
+
+		case $choice in 
+			1) 
+				read -p "Enter a new username : " new_username
+				sudo usermod -l "$new_username" "$username"
+				echo "Username updated to '$new_username'"
+				username="$new_username" #update for next loop
+				;;
+			2) 
+				read -p "Enter a new directory path: " new_home
+				sudo usermod -d "$new_home" -m "$username"
+				echo "home directory updated to '$new_home'"
+				;;
+			3) 
+				read -p "Enter new shell (e.g /bin/bash): " new_shell
+				sudo usermod -s "$new_shell" "$username"
+				echo "shell updated to '$new_shell'"
+				;;
+			4)
+				echo "Existng user edit menu."
+				break
+				;;
+			*)
+                		echo "Invalid option. Please select between 1-4."
+                		;;
+		esac
+	
+	done
+
+
+}
+
+
+
 if [ $# -eq 0 ] || [ "$1" = "-h" ] || [ "$1" = "--help" ]; 
 then
 	display_usage
@@ -83,8 +138,7 @@ do
 			list_users
 			;;
 		-u|--update)
-			echo "Not working currently!"
-			exit 1
+			update_user
 			;;
 		-r|--reset)
 			reset_password
